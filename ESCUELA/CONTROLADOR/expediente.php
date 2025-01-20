@@ -1,31 +1,30 @@
 <?php
     require_once("../MODELO/class-asignatura.php");
     require_once("../MODELO/class-alumno.php");
+    
 
-    if (isset($_POST["env"])) {
+    
+    function verExpediente(){
         $alumn = new alumno();
-        $alumn->expediente($_POST["alumn"]);
-    }else{
-        ?>
-        <form action="" method="post">
-                <select name="alumn" id="">
-                        
-                        <?php 
-                            $alumos = new alumno();
-                            $alumn=$alumos->listarAlum1();
-                            foreach ($alumn as $id=>$nombre) {
-                                echo "<option value=".$id.">$nombre</option>";
-                            }
+        $array=$alumn->expediente($_POST["alumn"]);
+        require_once("../VISTA/EXPEDIENTE.PHP");
+        
 
-                        ?>
-            </select>
-            <input type="submit" name="env" value="Enviar">
-        </form>
-        <?php
     }
 
+    function pordefecto(){
+        require_once("../MODELO/class-alumno.php");
+        $alumos = new alumno();
+        $alumn=$alumos->listarAlum1();
+        require_once("../VISTA/EXPEDIENTE.PHP");
+    }
 
-
+    if(isset($_REQUEST['action'])){
+        $action = $_REQUEST['action'];
+        $action();
+    }else{
+        pordefecto();
+    }
 
 
 

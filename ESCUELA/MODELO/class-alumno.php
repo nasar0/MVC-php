@@ -41,9 +41,14 @@
             $consulta->bind_result($alumno_nombre, $asignatura_nombre, $modulo, $anno, $nota);
             $consulta->bind_param("i",$idalum);
             $consulta->execute();
+            $array= array();
             while($consulta->fetch()){
-                echo "Alumno: $alumno_nombre, Asignatura: $asignatura_nombre, Módulo: $modulo, Año: $anno, Nota: $nota <br>";
+                $array[]=["Alumno"=> $alumno_nombre, "Asignatura" => $asignatura_nombre," Módulo"=> $modulo, "Año"=> $anno, "Nota"=> $nota];
             }
+
+            $consulta->close();
+
+            return $array;
         }
         
         
